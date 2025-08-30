@@ -17,6 +17,7 @@ wss.on("connection", (socket: WebSocket) => {
   socket.send("Hello from Server");
 
   socket.on("message", (message: any) => {
+    console.log("Received:", message.toString());
     const ParsedMessage = JSON.parse(message.toString());
 
     if (ParsedMessage.type === "join") {
@@ -29,6 +30,7 @@ wss.on("connection", (socket: WebSocket) => {
     }
 
     if (ParsedMessage.type === "chat") {
+      console.log(ParsedMessage.payload.message);
       const currentUserRoom = allsockets.find((s) => s.socket === socket)?.room;
       for(let i=0; i<allsockets.length; i++){
         // @ts-ignore
